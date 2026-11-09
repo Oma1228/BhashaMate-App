@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BhashaMate</title> Translator</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+
+    background:
+    linear-gradient(135deg,rgba(40,10,90,.65),rgba(220,20,140,.4)),
+    url("https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=2000&q=85");
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.container {
+    width: 100%;
+    max-width: 750px;
+    padding: 35px;
+    border-radius: 28px;
+    background: rgba(255,255,255,.91);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 20px 60px rgba(0,0,0,.3);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.logo {
+    font-size: 55px;
+}
+
+h1 {
+    font-size: 30px;
+    font-weight: 800;
+    background: linear-gradient(90deg,#7928ca,#ff0080,#ff9900);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+header p {
+    color: #777;
+    margin-top: 8px;
+}
+
+.languages {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 25px 0;
+}
+
+select {
+    flex: 1;
+    padding: 14px;
+    border: 2px solid #dfcaff;
+    border-radius: 12px;
+    background: white;
+    color: #673ab7;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.swap {
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 50%;
+    background: linear-gradient(135deg,#7928ca,#ff0080);
+    color: white;
+    font-size: 23px;
+    cursor: pointer;
+}
+
+.swap:hover {
+    transform: rotate(180deg);
+}
+
+label {
+    display: block;
+    margin: 12px 0;
+    color: #673ab7;
+    font-weight: 600;
+}
+
+textarea {
+    width: 100%;
+    height: 135px;
+    padding: 17px;
+    border: 2px solid #e5d5ff;
+    border-radius: 15px;
+    font-family: inherit;
+    font-size: 16px;
+    resize: vertical;
+    outline: none;
+}
+
+textarea:focus {
+    border-color: #a044ff;
+    box-shadow: 0 0 10px #d9b8ff;
+}
+
+.translate {
+    width: 100%;
+    padding: 16px;
+    margin: 22px 0;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(90deg,#7928ca,#ff0080,#ff9900);
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.translate:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px #c084fc;
+}
+
+.actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.actions button {
+    flex: 1;
+    padding: 13px;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.copy {
+    background: linear-gradient(90deg,#11998e,#38ef7d);
+}
+
+.clear {
+    background: linear-gradient(90deg,#ff416c,#ff4b2b);
+}
+
+#status {
+    text-align: center;
+    color: #7135b5;
+    margin: 12px 0;
+    font-size: 14px;
+}
+
+footer {
+    text-align: center;
+    color: #888;
+    font-size: 12px;
+    margin-top: 25px;
+}
+
+@media(max-width:500px) {
+    .container {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 23px;
+    }
+
+    .languages {
+        gap: 6px;
+    }
+
+    select {
+        padding: 10px 5px;
+        font-size: 13px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+    <div class="logo">🌍</div>
+    <h1>Magic Translator</h1>
+    <p>Break Language Barriers ✨</p>
+</header>
+
+<div class="languages">
+
+<select id="from">
+    <option value="si">🇱🇰 Sinhala</option>
+    <option value="en">🇬🇧 English</option>
+</select>
+
+<button class="swap" onclick="swapLanguages()">⇄</button>
+
+<select id="to">
+    <option value="en">🇬🇧 English</option>
+    <option value="si">🇱🇰 Sinhala</option>
+</select>
+
+</div>
+
+<label>✍️ Enter Your Text</label>
+
+<textarea id="input"
+placeholder="Type Sinhala or English here..."></textarea>
+
+<button class="translate" onclick="translateText()">
+    ✨ Translate Now
+</button>
+
+<p id="status"></p>
+
+<label>🌐 Translation Result</label>
+
+<textarea id="output"
+placeholder="Your translation appears here..."
+readonly></textarea>
+
+<div class="actions">
+    <button class="copy" onclick="copyText()">📋 Copy</button>
+    <button class="clear" onclick="clearText()">🗑 Clear</button>
+</div>
+
+<footer>
+    © 2026 Magic Translator | Sinhala & English
+</footer>
+
+</div>
+
+<script>
+
+async function translateText() {
+
+    const input = document.getElementById("input").value.trim();
+    const from = document.getElementById("from").value;
+    const to = document.getElementById("to").value;
+    const output = document.getElementById("output");
+    const status = document.getElementById("status");
+
+    if (!input) {
+        status.innerText = "Please enter some text!";
+        return;
+    }
+
+    if (from === to) {
+        status.innerText = "Please select different languages!";
+        return;
+    }
+
+    status.innerText = "⏳ Translating...";
+    output.value = "";
+
+    try {
+
+        const url =
+        "https://api.mymemory.translated.net/get?q=" +
+        encodeURIComponent(input) +
+        "&langpair=" + from + "|" + to;
+
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (data.responseStatus !== 200) {
+            throw new Error("Translation failed");
+        }
+
+        output.value = data.responseData.translatedText;
+        status.innerText = "✅ Translation completed!";
+
+    } catch (error) {
+
+        status.innerText = "❌ Translation failed. Check your internet connection.";
+
+    }
+}
+
+function swapLanguages() {
+
+    const from = document.getElementById("from");
+    const to = document.getElementById("to");
+
+    const temp = from.value;
+    from.value = to.value;
+    to.value = temp;
+
+    const input = document.getElementById("input");
+    const output = document.getElementById("output");
+
+    input.value = output.value;
+    output.value = "";
+
+}
+
+function copyText() {
+
+    const output = document.getElementById("output");
+
+    if (!output.value) {
+        document.getElementById("status").innerText =
+        "Nothing to copy!";
+        return;
+    }
+
+    navigator.clipboard.writeText(output.value)
+    .then(() => {
+        document.getElementById("status").innerText =
+        "📋 Copied successfully!";
+    })
+    .catch(() => {
+        document.getElementById("status").innerText =
+        "Unable to copy text.";
+    });
+
+}
+
+function clearText() {
+
+    document.getElementById("input").value = "";
+    document.getElementById("output").value = "";
+    document.getElementById("status").innerText = "";
+
+}
+
+</script>
+
+</body>
+</html>
